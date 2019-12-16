@@ -13,6 +13,7 @@ namespace my_wep_api.Controllers
     [ApiController]
     public class DescsController : ControllerBase
     {
+        //deneme
         IDescriptionDal _descDal;
 
         public DescsController(IDescriptionDal descDal)
