@@ -79,5 +79,20 @@ namespace my_wep_api.Controllers
                 return BadRequest(e.InnerException);
             }
         }
+
+        [HttpDelete("{titleId}")]
+        public IActionResult Delete(int titleId)
+        {
+            try
+            {
+                _titleDal.Delete(new Titles { TitleId = titleId });
+
+                return Ok($"{titleId} 'li product silinmiştir.");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.InnerException);
+            }
+        }
     }
 }

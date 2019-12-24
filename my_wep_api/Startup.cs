@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,8 +34,8 @@ namespace my_wep_api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            
 
+            services.AddCors();//to call from angular app
             services.AddScoped<IProductDal, EfProductDal>();//Eðer Iproductdal'a ihtiyaç olursa EfProductDal'ý new le ve bunu ver
             services.AddScoped<ITitleDal, EfTitlesManager>();
             services.AddScoped<ICompanyDal, EfCompaniesDal>();
@@ -53,6 +55,13 @@ namespace my_wep_api
 
             services.AddAuthentication(p => p.DefaultChallengeScheme = Microsoft.AspNetCore.Server.IISIntegration.IISDefaults.AuthenticationScheme);
 
+
+            ////In production, the Angular files will be served from this directory
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "my-app/dist";
+            //});
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +74,10 @@ namespace my_wep_api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:4200/").AllowAnyOrigin()
+            );
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -73,10 +86,25 @@ namespace my_wep_api
 
             app.UseAuthorization();
 
+            //app.UseSpaStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            //app.UseSpa(spa =>
+            //{
+            //    // To learn more about options for serving an Angular SPA from ASP.NET Core,
+            //    // see https://go.microsoft.com/fwlink/?linkid=864501
+
+            //    spa.Options.SourcePath = Path.Join(env.ContentRootPath, "my-app");
+
+            //    if (env.IsDevelopment())
+            //    {
+            //        spa.UseAngularCliServer(npmScript: "start");
+            //    }
+            //});
         }
     }
 }
