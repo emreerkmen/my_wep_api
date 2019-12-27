@@ -75,7 +75,10 @@ namespace my_wep_api
             }
 
             app.UseCors(
-                options => options.WithOrigins("http://localhost:4200/").AllowAnyOrigin()
+                options => options.WithOrigins("http://localhost:4200/")
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
             );
 
             app.UseHttpsRedirection();
