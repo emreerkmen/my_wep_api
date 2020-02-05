@@ -11,7 +11,7 @@ namespace my_wep_api.DataAccess
 {
     public class EfTitlesManager : EfEntityRepositoryBase<Titles, ResumeContext>, ITitleDal
     {
-        List<Titles> ITitleDal.GetProductsWithDetails()
+        List<Titles> ITitleDal.GetTitlesWithDetails()
         {
             using (ResumeContext context = new ResumeContext())
             {

@@ -40,6 +40,7 @@ namespace my_wep_api
             services.AddScoped<ITitleDal, EfTitlesManager>();
             services.AddScoped<ICompanyDal, EfCompaniesDal>();
             services.AddScoped<IDescriptionDal, EfDescriptionsDal>();
+            services.AddScoped<IResumeDal, EfResumesDal>();
 
             //services.AddTransient<IProductDal, EfProductDal>();
             //services.AddSingleton<IProductDal, EfProductDal>();

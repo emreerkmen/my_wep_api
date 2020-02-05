@@ -10,6 +10,6 @@ namespace my_wep_api.DataAccess
     {
         //Buraya custom sorgular yazılır.
 
-        List<Titles> GetProductsWithDetails();
+        List<Titles> GetTitlesWithDetails();
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace my_wep_api.Entities
 {
-    public class Resumes
+    public class Resumes : IEntity
     {
         [Key]
         public int ResumeId { get; set; }
