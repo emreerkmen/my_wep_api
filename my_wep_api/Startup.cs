@@ -69,7 +69,7 @@ namespace my_wep_api
                         options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
             else
                 services.AddDbContext<ResumeContext>(options =>
-                        options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ResumesDb;Integrated Security=True");
+                        options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ResumesDb;Integrated Security=True"));
 
             // Automatically perform database migration
             services.BuildServiceProvider().GetService<ResumeContext>().Database.Migrate();
