@@ -35,7 +35,7 @@ namespace my_wep_api
         {
 
 
-            services.AddCors();//to call from angular app
+            services.AddCors();//to call from in angular app
             services.AddScoped<IProductDal, EfProductDal>();//Eðer Iproductdal'a ihtiyaç olursa EfProductDal'ý new le ve bunu ver
             services.AddScoped<ITitleDal, EfTitlesManager>();
             services.AddScoped<ICompanyDal, EfCompaniesDal>();
@@ -62,6 +62,17 @@ namespace my_wep_api
             //{
             //    configuration.RootPath = "my-app/dist";
             //});
+
+            // Use SQL Database if in Azure, otherwise, use SQLite
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+                services.AddDbContext<ResumeContext>(options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+            else
+                services.AddDbContext<ResumeContext>(options =>
+                        options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ResumesDb;Integrated Security=True");
+
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<ResumeContext>().Database.Migrate();
 
         }
 
