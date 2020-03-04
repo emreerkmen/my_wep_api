@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using my_wep_api.Configuration;
 using my_wep_api.CustomMiddlewares;
 using my_wep_api.DataAccess;
 using my_wep_api.Formatter;
@@ -65,14 +66,16 @@ namespace my_wep_api
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
-                services.AddDbContext<ResumeContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+                //services.AddDbContext<ResumeContext>(options =>
+                //        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+                Config.ConnectionString= Configuration.GetConnectionString("MyDbConnection");
             else
-                services.AddDbContext<ResumeContext>(options =>
-                        options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ResumesDb;Integrated Security=True"));
+                //services.AddDbContext<ResumeContext>(options =>
+                //        options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ResumesDb;Integrated Security=True"));
+                Config.ConnectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ResumesDb;Integrated Security=True";
 
             // Automatically perform database migration
-            services.BuildServiceProvider().GetService<ResumeContext>().Database.Migrate();
+            //services.BuildServiceProvider().GetService<ResumeContext>().Database.Migrate();
 
         }
 

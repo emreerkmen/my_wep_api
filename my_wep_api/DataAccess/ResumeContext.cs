@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using my_wep_api.Configuration;
 using my_wep_api.Entities;
 using my_wep_api.Models;
 using System;
@@ -10,15 +11,11 @@ namespace my_wep_api.DataAccess
 {
     public class ResumeContext : DbContext
     {
-        /*public ResumeContext(DbContextOptions<ResumeContext> options)
-           : base(options)
-        {
-        }*/
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ResumesDb;Integrated Security=True");
+            optionsBuilder.UseSqlServer(Config.ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
