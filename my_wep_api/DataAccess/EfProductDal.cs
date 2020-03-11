@@ -9,6 +9,9 @@ namespace my_wep_api.DataAccess
 {
     public class EfProductDal : EfEntityRepositoryBase<Product, NorthwindContext>, IProductDal
     {
+        public EfProductDal(NorthwindContext context)
+        : base(context)
+        { }
         public List<ProductModel> GetProductsWithDetails()
         {
             using (NorthwindContext context = new NorthwindContext())

@@ -9,37 +9,38 @@ namespace my_wep_api.DataAccess
 {
     public class EfResumesDal : EfEntityRepositoryBase<Resumes, ResumeContext>, IResumeDal
     {
+        public EfResumesDal(ResumeContext context)
+        : base(context)
+        { }
         public List<ResumeDesc> GetResumesWithDetails()
         {
-            using (ResumeContext context = new ResumeContext())
-            {
-                //var resultOld = from p in context.Products
-                //             join c in context.Categories
-                //             on p.CategoryId equals c.CategoryId
-                //             select new ProductModel
-                //             {
-                //                 ProductId = p.ProductId,
-                //                 ProductName = p.ProductName,
-                //                 CategoryName = c.CategoryName,
-                //                 CategoryDescription = c.Description
-                //             };
+            //var resultOld = from p in context.Products
+            //             join c in context.Categories
+            //             on p.CategoryId equals c.CategoryId
+            //             select new ProductModel
+            //             {
+            //                 ProductId = p.ProductId,
+            //                 ProductName = p.ProductName,
+            //                 CategoryName = c.CategoryName,
+            //                 CategoryDescription = c.Description
+            //             };
 
-                var result = from r in context.Resumes
-                                join t in context.Titles on r.TitleId equals t.TitleId
-                                join c in context.Companies on r.CompantId equals c.CompanyId
-                                join d in context.Descriptions on r.DecsId equals d.DescId
-                                select new ResumeDesc
-                                {
-                                    ResumeId = r.ResumeId,
-                                    Title = t.Title,
-                                    StartDate = t.StartDate,
-                                    EndDate = t.EndDate,
-                                    CompanyName = c.CompanyName,
-                                    Description = d.Description
-                                };
+            var result = from r in _resumeContext.Resumes
+                            join t in _resumeContext.Titles on r.TitleId equals t.TitleId
+                            join c in _resumeContext.Companies on r.CompantId equals c.CompanyId
+                            join d in _resumeContext.Descriptions on r.DecsId equals d.DescId
+                            select new ResumeDesc
+                            {
+                                ResumeId = r.ResumeId,
+                                Title = t.Title,
+                                StartDate = t.StartDate,
+                                EndDate = t.EndDate,
+                                CompanyName = c.CompanyName,
+                                Description = d.Description
+                            };
 
-                return result.ToList();
-            }
+            return result.ToList();
+            
         }
     }
 }

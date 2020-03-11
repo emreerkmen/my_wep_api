@@ -11,18 +11,18 @@ namespace my_wep_api.DataAccess
 {
     public class EfTitlesManager : EfEntityRepositoryBase<Titles, ResumeContext>, ITitleDal
     {
+        public EfTitlesManager(ResumeContext context)
+        : base(context)
+        { }
         List<Titles> ITitleDal.GetTitlesWithDetails()
         {
-            using (ResumeContext context = new ResumeContext())
-            {
-                var result = from t in context.Titles
-                             select new Titles
-                             {
-                                 Title = t.Title
-                             };
+            var result = from t in _resumeContext.Titles
+                            select new Titles
+                            {
+                                Title = t.Title
+                            };
 
-                return result.ToList();
-            }
+            return result.ToList();
         }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using my_wep_api.DataAccess;
 
 namespace my_wep_api.Migrations
 {
     [DbContext(typeof(ResumeContext))]
-    partial class ResumeContextModelSnapshot : ModelSnapshot
+    [Migration("20200308154014_ResumeAdd")]
+    partial class ResumeAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,23 +34,6 @@ namespace my_wep_api.Migrations
                     b.HasKey("CompanyId");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            CompanyId = 1,
-                            CompanyName = "Migros Ticaret A.Ş."
-                        },
-                        new
-                        {
-                            CompanyId = 2,
-                            CompanyName = "Agito Yazılım & Danışmanlık"
-                        },
-                        new
-                        {
-                            CompanyId = 3,
-                            CompanyName = "Intertech Bilgi İşlem ve Pazarlama Ticaret A.Ş."
-                        });
                 });
 
             modelBuilder.Entity("my_wep_api.Entities.Descriptions", b =>
@@ -64,23 +49,6 @@ namespace my_wep_api.Migrations
                     b.HasKey("DescId");
 
                     b.ToTable("Descriptions");
-
-                    b.HasData(
-                        new
-                        {
-                            DescId = 1,
-                            Description = "Şirketin Alternatif Dağıtım Kanalları bölümünde Kullanıcı Deneyiminden sorumlulu ekipte görev aldım. Ms Sql ve Asp.Net ile web uygulaması geliştirdim. Bu görev boyunca ekibin kullanabileceği,işlevi ekip içindeki kullanıcıların birbirine görev atayıp bu görevleri takip edebileceği ASP.NET ve MS SQL tabanlı ve N - tier yaklaşımının kullanıldığı bir web uygulaması tasarlayıp hayata geçirdim."
-                        },
-                        new
-                        {
-                            DescId = 2,
-                            Description = "Birden fazla sağlık sigortası şirketine geliştirmeler sağlayan Proje ve Ek Kapsam ekibinde Yazılım Uzman Yardımcısı olarak görev aldım. Oracle Database ve PL/SQL ile backend geliştirmede, IIS, ASP.NET ile web uygulaması ve Soap tabanlı web servisleri üzerine geliştirmelerde bulundum. BNP Paribas Cardif sigortacılık şirket için yazılım geliştirme ekibinde Yazılım Uzman Yardımcısı olarak görev aldım. Uygulama geliştirmede Oracle Database, PL/SQL, Oracle Forms Builder, Oracle Forms Reports ve Oracle Weblogic Server kullandım."
-                        },
-                        new
-                        {
-                            DescId = 3,
-                            Description = "NN Hayat ve Emeklilik ile ING Bank arasında veri entegrasyonu projesinde backend yazılımcı olarak görev aldım. NN Hayat ve Emeklilik verileri anlık olarak kayıt edilip daha sonra asenkron bir yapı ile kontrolü sağlanıp ING Bank sistemi ile entegrasyonu sağlanmaktadır. Bu projede geçmiş verilerin SFTP ile aktarılmasında, sistemin geliştirilmesinde ve iyileştirilmesinde görev aldım."
-                        });
                 });
 
             modelBuilder.Entity("my_wep_api.Entities.Resumes", b =>
@@ -123,6 +91,91 @@ namespace my_wep_api.Migrations
                     b.HasKey("TitleId");
 
                     b.ToTable("Titles");
+                });
+
+            modelBuilder.Entity("my_wep_api.Models.CompaniesModel", b =>
+                {
+                    b.Property<int>("CompanyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CompanyId");
+
+                    b.ToTable("CompaniesModel");
+
+                    b.HasData(
+                        new
+                        {
+                            CompanyId = 1,
+                            CompanyName = "Migros Ticaret A.Ş."
+                        },
+                        new
+                        {
+                            CompanyId = 2,
+                            CompanyName = "Agito Yazılım & Danışmanlık"
+                        },
+                        new
+                        {
+                            CompanyId = 3,
+                            CompanyName = "Intertech Bilgi İşlem ve Pazarlama Ticaret A.Ş."
+                        });
+                });
+
+            modelBuilder.Entity("my_wep_api.Models.DescriptionsModel", b =>
+                {
+                    b.Property<int>("DescId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DescId");
+
+                    b.ToTable("DescriptionsModel");
+
+                    b.HasData(
+                        new
+                        {
+                            DescId = 1,
+                            Description = "Şirketin Alternatif Dağıtım Kanalları bölümünde Kullanıcı Deneyiminden sorumlulu ekipte görev aldım. Ms Sql ve Asp.Net ile web uygulaması geliştirdim. Bu görev boyunca ekibin kullanabileceği,işlevi ekip içindeki kullanıcıların birbirine görev atayıp bu görevleri takip edebileceği ASP.NET ve MS SQL tabanlı ve N - tier yaklaşımının kullanıldığı bir web uygulaması tasarlayıp hayata geçirdim."
+                        },
+                        new
+                        {
+                            DescId = 2,
+                            Description = "Birden fazla sağlık sigortası şirketine geliştirmeler sağlayan Proje ve Ek Kapsam ekibinde Yazılım Uzman Yardımcısı olarak görev aldım. Oracle Database ve PL/SQL ile backend geliştirmede, IIS, ASP.NET ile web uygulaması ve Soap tabanlı web servisleri üzerine geliştirmelerde bulundum. BNP Paribas Cardif sigortacılık şirket için yazılım geliştirme ekibinde Yazılım Uzman Yardımcısı olarak görev aldım. Uygulama geliştirmede Oracle Database, PL/SQL, Oracle Forms Builder, Oracle Forms Reports ve Oracle Weblogic Server kullandım."
+                        },
+                        new
+                        {
+                            DescId = 3,
+                            Description = "NN Hayat ve Emeklilik ile ING Bank arasında veri entegrasyonu projesinde backend yazılımcı olarak görev aldım. NN Hayat ve Emeklilik verileri anlık olarak kayıt edilip daha sonra asenkron bir yapı ile kontrolü sağlanıp ING Bank sistemi ile entegrasyonu sağlanmaktadır. Bu projede geçmiş verilerin SFTP ile aktarılmasında, sistemin geliştirilmesinde ve iyileştirilmesinde görev aldım."
+                        });
+                });
+
+            modelBuilder.Entity("my_wep_api.Models.TitlesModel", b =>
+                {
+                    b.Property<int>("TitleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TitleId");
+
+                    b.ToTable("TitlesModel");
 
                     b.HasData(
                         new

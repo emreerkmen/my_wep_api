@@ -8,6 +8,9 @@ namespace my_wep_api.DataAccess
 {
     public class EfDescriptionsDal : EfEntityRepositoryBase<Descriptions, ResumeContext>, IDescriptionDal
     {
+        public EfDescriptionsDal(ResumeContext context)
+        : base(context)
+        { }
         public List<Descriptions> GetProductsWithDetails()
         {
             throw new NotImplementedException();

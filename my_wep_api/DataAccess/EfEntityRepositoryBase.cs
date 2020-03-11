@@ -10,58 +10,53 @@ namespace my_wep_api.DataAccess
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
         where TEntity : class, IEntity, new()
-        where TContext : DbContext, new()
+        where TContext : DbContext
     {
+        protected TContext _resumeContext;
+
+        public EfEntityRepositoryBase(TContext context)
+        {
+            _resumeContext = context;
+        }
+
         public TEntity Get(Expression<Func<TEntity, bool>> filter = null)
         {
-            using (var context = new TContext())
-            {
-                return context.Set<TEntity>().SingleOrDefault(filter);
-            }
+
+            return _resumeContext.Set<TEntity>().SingleOrDefault(filter);
+
         }
         public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
         {
-            using (var context = new TContext())
-            {
-                return filter == null
-                    ? context.Set<TEntity>().ToList()
-                    : context.Set<TEntity>().Where(filter).ToList();
-            }
+
+            return filter == null
+                ? _resumeContext.Set<TEntity>().ToList()
+                : _resumeContext.Set<TEntity>().Where(filter).ToList();
         }
         public void Add(TEntity entity)
         {
-            using (var context = new TContext())
-            {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
 
-                //https://youtu.be/PpqdsJDvcxY?list=PLdo4fOcmZ0oX7uTkjYwvCJDG2qhcSzwZ6&t=578
-                //context.Add(entity);
-                //context.SaveChanges();
-            }
+            var addedEntity = _resumeContext.Entry(entity);
+            addedEntity.State = EntityState.Added;
+            _resumeContext.SaveChanges();
+
+            //https://youtu.be/PpqdsJDvcxY?list=PLdo4fOcmZ0oX7uTkjYwvCJDG2qhcSzwZ6&t=578
+            //context.Add(entity);
+            //context.SaveChanges();
 
 
         }
         public void Update(TEntity entity)
         {
-            using (var context = new TContext())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
 
-            }
+            var updatedEntity = _resumeContext.Entry(entity);
+            updatedEntity.State = EntityState.Modified;
+            _resumeContext.SaveChanges();
         }
         public void Delete(TEntity entity)
         {
-            using (var context = new TContext())
-            {
-                var deleteEntity = context.Entry(entity);
-                deleteEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-
-            }
+            var deleteEntity = _resumeContext.Entry(entity);
+            deleteEntity.State = EntityState.Deleted;
+            _resumeContext.SaveChanges();
         }
     }
 }

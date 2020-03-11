@@ -26,6 +26,7 @@ namespace my_wep_api
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Config config = new Config();
         }
 
         public IConfiguration Configuration { get; }
@@ -66,9 +67,14 @@ namespace my_wep_api
 
             // Use SQL Database if in Azure, otherwise, use SQLite
             if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
                 //services.AddDbContext<ResumeContext>(options =>
                 //        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
-                Config.ConnectionString= Configuration.GetConnectionString("MyDbConnection");
+                //Config.ConnectionString = Configuration.GetConnectionString("MyDbConnection");
+                //var emre = Configuration.GetConnectionString("MyDbConnection");
+                services.AddDbContext<ResumeContext>();
+                //services.AddDbContext<ResumeContext>(x => x.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+            }
             else
                 //services.AddDbContext<ResumeContext>(options =>
                 //        options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ResumesDb;Integrated Security=True"));
@@ -81,7 +87,7 @@ namespace my_wep_api
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         //Middleware burada
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ResumeContext resumeContext)
         {
             
             if (env.IsDevelopment())
@@ -123,6 +129,9 @@ namespace my_wep_api
             //        spa.UseAngularCliServer(npmScript: "start");
             //    }
             //});
+
+            resumeContext.Database.Migrate();
+
         }
     }
 }

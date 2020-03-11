@@ -8,6 +8,10 @@ namespace my_wep_api.DataAccess
 {
     public class EfCompaniesDal : EfEntityRepositoryBase<Companies, ResumeContext>, ICompanyDal
     {
+        public EfCompaniesDal(ResumeContext context)
+        : base(context)
+        { }
+
         public List<Companies> GetProductsWithDetails()
         {
             throw new NotImplementedException();
